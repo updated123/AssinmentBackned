@@ -26,7 +26,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', apiRoutes);
 
-const JWT_SECRET = process.env.SECRET;
 const Email= process.env.email;
 const Password=process.env.password;
 
@@ -37,7 +36,7 @@ app.post("/forgot-password", async (req, res) => {
       if (!oldUser) {
         return res.json({ status: "User Not Exists!!" });
       }
-      const secret = JWT_SECRET + oldUser.password;
+      const secret = "utsav_patel" + oldUser.password;
       const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
         expiresIn: "5m",
       });
