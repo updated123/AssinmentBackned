@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', apiRoutes);
 
-const Email= process.env.email;
-const Password=process.env.password;
+const User= process.env.User;
+const Pass=process.env.Password;
 
 app.post("/forgot-password", async (req, res) => {
     const { email } = req.body;
@@ -44,8 +44,8 @@ app.post("/forgot-password", async (req, res) => {
       var transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: Email,
-          pass: Password,
+          user: User,
+          pass: Pass,
         },
       });
   
@@ -76,7 +76,7 @@ app.post("/forgot-password", async (req, res) => {
     if (!oldUser) {
       return res.json({ status: "User Not Exists!!" });
     }
-    const secret = JWT_SECRET + oldUser.password;
+    const secret = "utsav_patel" + oldUser.password;
     try {
       const verify = jwt.verify(token, secret);
       res.render("index", { email: verify.email, status: "Not Verified" });
@@ -93,7 +93,7 @@ app.post("/forgot-password", async (req, res) => {
     if (!oldUser) {
       return res.json({ status: "User Not Exists!!" });
     }
-    const secret = JWT_SECRET + oldUser.password;
+    const secret = "utsav_patel" + oldUser.password;
     try {
       const verify = jwt.verify(token, secret);
       const encryptedPassword = await bcrypt.hash(password, 10);
